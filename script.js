@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 axios.get('https://codersuk-test.s3-eu-west-1.amazonaws.com/data.json')
   .then((data) => {
