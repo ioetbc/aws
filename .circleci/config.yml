@@ -1,8 +1,19 @@
-version: 2.1
+version: 2
 jobs:
   build:
-    docker: 
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+    docker:
+      - image: circleci/python:2.7-jessie
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - checkout
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3 bucket
+          command: aws s3 sync public/ s3://codersuk-test --exclude '.circleci/*'
+            --exclude '.git/*'
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
